@@ -55,17 +55,18 @@
 		//Ball trifft Paddel (rechts)
 		if (ballPosX>=750 && ballPosX<=760 && rightPaddlePos<(ballPosY+9) && (rightPaddlePos+150)>ballPosY) {
 			ballVtotal += 0.1
-			ballVy = ((ballPosY - rightPaddlePos)/18)-4;
-			ballVx = -1*(ballVtotal - ballVy);
-			
-			console.log(ballVy);
+			ballVy = ((ballPosY - rightPaddlePos)/150)*1.6*ballVtotal-0.8*ballVtotal; //<--kompliziert
+			ballVx = -1*Math.sqrt(ballVtotal*ballVtotal - ballVy*ballVy);
+			console.log("x: "+ballVx);
+			console.log("y: "+ballVy);
+			console.log("total: "+ballVtotal);
 		};
 
 		//Ball trifft Paddel (links)
 		if (ballPosX<=40 && ballPosX>=30 && leftPaddlePos<(ballPosY+9) && (leftPaddlePos+150)>ballPosY) {
 			ballVtotal += 0.1
-			ballVy = ((ballPosY - leftPaddlePos)/18)-4;
-			ballVx = ballVtotal - ballVy;
+			ballVy = ballVy = ((ballPosY - leftPaddlePos)/150)*1.6*ballVtotal-0.8*ballVtotal;
+			ballVx = Math.sqrt(ballVtotal*ballVtotal - ballVy*ballVy);
 		};
 
 		//Ball trifft obere oder untere Wand
