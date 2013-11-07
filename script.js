@@ -1,0 +1,110 @@
+/*~~~~~~~~~~VARIABLEN~~~~~~~~~~*/
+
+	var leftPaddlePos = 225;
+	var rightPaddlePos = 225;
+	var ballPosX = 395;
+	var ballPosY = 295;
+	var leftV = 0;
+	var rightV = 0;
+	var ballVtotal = 7;
+	var ballVx = 4;
+	var ballVy = 3;
+	var leftScore = 0;
+	var rightScore = 0;
+
+/*~~~~~~~~~~Event Listener~~~~~~~~~~*/
+
+	window.addEventListener('keydown', function (e) {
+		if (e.keyCode === 38) {
+			rightV = -3;
+		} else if (e.keyCode == 40) {
+			rightV = 3;
+		} else if (e.keyCode == 87) {
+			leftV = -3;
+		} else if (e.keyCode == 83) {
+			leftV = 3;
+		};
+	}, false);
+
+	window.addEventListener('keyup', function(e){
+		if (e.keyCode === 38) {
+			if(rightV == -3) rightV = 0;
+		} else if (e.keyCode == 40) {
+			if(rightV == 3) rightV = 0;
+		} else if (e.keyCode == 87) {
+			if(leftV == -3) leftV =0;
+		} else if (e.keyCode == 83) {
+			if(leftV == 3) leftV = 0;
+		};
+	}, false);
+
+
+/*~~~~~~~~~~Funktionen~~~~~~~~~~*/
+
+	var update = function(){
+		
+		/*------Paddelbewegung------*/
+		if ((rightV > 0 && rightPaddlePos<450)||(rightV<0 && rightPaddlePos>0)) {
+			rightPaddlePos += rightV;
+		};
+		if ((leftV > 0 && leftPaddlePos<450)||(leftV<0 && leftPaddlePos>0)) {
+			leftPaddlePos += leftV;
+		};
+
+		/*------Kollisionsabfragen------*/
+		//Ball trifft Paddel (rechts)
+		if (ballPosX>=750 && ballPosX<=760 && rightPaddlePos<(ballPosY+9) && (rightPaddlePos+150)>ballPosY) {
+			ballVtotal += 0.1
+			ballVy = ((ballPosY - rightPaddlePos)/18)-4;
+			ballVx = -1*(ballVtotal - ballVy);
+			
+			console.log(ballVy);
+		};
+
+		//Ball trifft Paddel (links)
+		if (ballPosX<=40 && ballPosX>=30 && leftPaddlePos<(ballPosY+9) && (leftPaddlePos+150)>ballPosY) {
+			ballVtotal += 0.1
+			ballVy = ((ballPosY - leftPaddlePos)/18)-4;
+			ballVx = ballVtotal - ballVy;
+		};
+
+		//Ball trifft obere oder untere Wand
+		if (ballPosY>=590 || ballPosY<=0) {
+			ballVy *= -1;
+		}
+
+		//Ball geht ins Aus (links)
+		if(ballPosX<=0){
+			rightScore += 1;
+			ballPosX = 395;
+			ballPosY = 295;
+			ballVx = 3;
+			ballVy = 4;
+			ballVtotal = 7;
+			document.getElementById("rs").innerHTML = rightScore;
+		
+		//Ball geht ins Aus (rechts)
+		} else if(ballPosX>=790){
+			leftScore += 1;
+			ballPosX = 395;
+			ballPosY = 295;
+			ballVx = 3;
+			ballVy = 4;
+			ballVtotal = 7;
+			document.getElementById("ls").innerHTML = leftScore;
+
+		/*------Ballbewegung------*/
+		} else {
+			ballPosX += ballVx;
+		};
+		ballPosY += ballVy; 
+
+		/*------Positionen updaten------*/
+		document.getElementById("lp").style.top = leftPaddlePos;
+		document.getElementById("rp").style.top = rightPaddlePos;
+		document.getElementById("b").style.top = ballPosY;
+		document.getElementById("b").style.left = ballPosX;
+	}
+
+/*~~~~~~~~~~FPS~~~~~~~~~~*/
+	window.setInterval("update()",16);

@@ -1,0 +1,85 @@
+body {
+			background-color: #AE2312;
+		}
+
+		div{
+			background-color: #FFF;
+		}
+
+		div.gameDiv{
+			width: 800px;
+			height: 600px;
+			background-color: #000;
+			position:absolute;
+		}
+
+		div.scoreDiv{
+			background-color: #CCCCCC;
+			font-size: 20px;
+			height: 100px;
+			position: absolute;
+			top: 608px;
+			width: 800px;
+		}
+
+		div.scoreWrapper {
+		   width: 800px;
+		}
+
+		div.leftScoreWrapper {
+			float: left;
+			width: 390px;
+			background-color: #000;
+		}
+
+		div.rightScoreWrapper {
+			float: right;
+			width: 390px;
+			background-color: #000;
+		}
+
+		div.leftScoreDiv {
+		   float: right;
+		   background-color: #CCCCCC;
+		}
+
+		div.rightScoreDiv {
+		   float: left;
+		   background-color: #CCCCCC;
+		}
+
+		div.scoreWrapper{
+			width: 800px;
+			text-align: center;
+		}
+
+		div.leftScoreDiv{
+			display: inline-block;
+		}
+		div.rightScoreDiv{
+			display: inline-block;
+		}
+
+		div.leftPaddle{
+			width: 20px;
+			height: 150px;
+			position: absolute;
+			left: 20px;
+			top: 225px;
+		}
+
+		div.rightPaddle{
+			width: 20px;
+			height: 150px;
+			position: absolute;
+			left: 760px;
+			top: 225px;
+		}
+
+		div.ball{
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			left: 395px;
+			top: 295px;
+		}
