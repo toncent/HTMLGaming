@@ -1,25 +1,17 @@
 body {
-			background-color: #AE2312;
+			background-color: #888;
 		}
 
 		div{
-			background-color: #FFF;
+			background-color: #000;
+			color: #FFF;
 		}
 
 		div.gameDiv{
 			width: 800px;
 			height: 600px;
-			background-color: #000;
 			position:absolute;
-		}
-
-		div.scoreDiv{
-			background-color: #CCCCCC;
-			font-size: 20px;
-			height: 100px;
-			position: absolute;
-			top: 608px;
-			width: 800px;
+			border: 5px double;
 		}
 
 		div.scoreWrapper {
@@ -29,35 +21,28 @@ body {
 		div.leftScoreWrapper {
 			float: left;
 			width: 390px;
-			background-color: #000;
 		}
 
 		div.rightScoreWrapper {
 			float: right;
 			width: 390px;
-			background-color: #000;
 		}
 
 		div.leftScoreDiv {
 		   float: right;
-		   background-color: #CCCCCC;
+		   display: inline-block;
+		   font-size: 60px;
 		}
 
 		div.rightScoreDiv {
 		   float: left;
-		   background-color: #CCCCCC;
+		   display: inline-block;
+		   font-size: 60px;
 		}
 
 		div.scoreWrapper{
 			width: 800px;
 			text-align: center;
-		}
-
-		div.leftScoreDiv{
-			display: inline-block;
-		}
-		div.rightScoreDiv{
-			display: inline-block;
 		}
 
 		div.leftPaddle{
@@ -66,6 +51,8 @@ body {
 			position: absolute;
 			left: 20px;
 			top: 225px;
+			border-radius: 5px;
+			background-color: #FFF;
 		}
 
 		div.rightPaddle{
@@ -74,6 +61,8 @@ body {
 			position: absolute;
 			left: 760px;
 			top: 225px;
+			border-radius: 5px;
+			background-color: #FFF;
 		}
 
 		div.ball{
@@ -82,4 +71,6 @@ body {
 			position: absolute;
 			left: 395px;
 			top: 295px;
+			border-radius: 5px;
+			background-color: #FFF;
 		}

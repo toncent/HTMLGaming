@@ -1,5 +1,6 @@
 /*~~~~~~~~~~VARIABLEN~~~~~~~~~~*/
 
+	var paddleSpeed = 5;
 	var leftPaddlePos = 225;
 	var rightPaddlePos = 225;
 	var ballPosX = 395;
@@ -16,25 +17,25 @@
 
 	window.addEventListener('keydown', function (e) {
 		if (e.keyCode === 38) {
-			rightV = -3;
+			rightV = -paddleSpeed;
 		} else if (e.keyCode == 40) {
-			rightV = 3;
+			rightV = paddleSpeed;
 		} else if (e.keyCode == 87) {
-			leftV = -3;
+			leftV = -paddleSpeed;
 		} else if (e.keyCode == 83) {
-			leftV = 3;
+			leftV = paddleSpeed;
 		};
 	}, false);
 
 	window.addEventListener('keyup', function(e){
 		if (e.keyCode === 38) {
-			if(rightV == -3) rightV = 0;
+			if(rightV == -paddleSpeed) rightV = 0;
 		} else if (e.keyCode == 40) {
-			if(rightV == 3) rightV = 0;
+			if(rightV == paddleSpeed) rightV = 0;
 		} else if (e.keyCode == 87) {
-			if(leftV == -3) leftV =0;
+			if(leftV == -paddleSpeed) leftV =0;
 		} else if (e.keyCode == 83) {
-			if(leftV == 3) leftV = 0;
+			if(leftV == paddleSpeed) leftV = 0;
 		};
 	}, false);
 
@@ -53,7 +54,7 @@
 
 		/*------Kollisionsabfragen------*/
 		//Ball trifft Paddel (rechts)
-		if (ballPosX>=750 && ballPosX<=760 && rightPaddlePos<(ballPosY+9) && (rightPaddlePos+150)>ballPosY) {
+		if (ballPosX>=750 && ballPosX<=780 && rightPaddlePos<(ballPosY+9) && (rightPaddlePos+150)>ballPosY) {
 			ballVtotal += 0.1
 			ballVy = ((ballPosY - rightPaddlePos)/150)*1.6*ballVtotal-0.8*ballVtotal; //<--kompliziert
 			ballVx = -1*Math.sqrt(ballVtotal*ballVtotal - ballVy*ballVy);
@@ -63,7 +64,7 @@
 		};
 
 		//Ball trifft Paddel (links)
-		if (ballPosX<=40 && ballPosX>=30 && leftPaddlePos<(ballPosY+9) && (leftPaddlePos+150)>ballPosY) {
+		if (ballPosX<=40 && ballPosX>=10 && leftPaddlePos<(ballPosY+9) && (leftPaddlePos+150)>ballPosY) {
 			ballVtotal += 0.1
 			ballVy = ballVy = ((ballPosY - leftPaddlePos)/150)*1.6*ballVtotal-0.8*ballVtotal;
 			ballVx = Math.sqrt(ballVtotal*ballVtotal - ballVy*ballVy);
