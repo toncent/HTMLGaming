@@ -55,7 +55,7 @@
 		/*------Kollisionsabfragen------*/
 		//Ball trifft Paddel (rechts)
 		if (ballPosX>=750 && ballPosX<=780 && rightPaddlePos<(ballPosY+9) && (rightPaddlePos+150)>ballPosY) {
-			ballVtotal += 0.1
+			ballVtotal += 0.2;
 			ballVy = ((ballPosY - rightPaddlePos)/150)*1.6*ballVtotal-0.8*ballVtotal; //<--kompliziert
 			ballVx = -1*Math.sqrt(ballVtotal*ballVtotal - ballVy*ballVy);
 			console.log("x: "+ballVx);
@@ -65,7 +65,7 @@
 
 		//Ball trifft Paddel (links)
 		if (ballPosX<=40 && ballPosX>=10 && leftPaddlePos<(ballPosY+9) && (leftPaddlePos+150)>ballPosY) {
-			ballVtotal += 0.1
+			ballVtotal += 0.2;
 			ballVy = ballVy = ((ballPosY - leftPaddlePos)/150)*1.6*ballVtotal-0.8*ballVtotal;
 			ballVx = Math.sqrt(ballVtotal*ballVtotal - ballVy*ballVy);
 		};
