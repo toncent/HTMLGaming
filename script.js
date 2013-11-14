@@ -13,6 +13,7 @@
 	var rightScore = 0;
 	var paused = 1;
 	var pauseTimer = 2000;
+	var gameStarted = 0;
 
 /*~~~~~~~~~~Event Listener~~~~~~~~~~*/
 
@@ -26,7 +27,10 @@
 		} else if (e.keyCode == 83) {
 			leftV = paddleSpeed;
 		} else if (e.keyCode == 32) {
-			init();
+			if (gameStarted == 0) {
+				init();
+				gameStarted = 1;
+			}
 		};
 	}, false);
 
