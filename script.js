@@ -1,5 +1,5 @@
 /*~~~~~~~~~~VARIABLEN~~~~~~~~~~*/
-
+//TODO: ballrichtung am anfang random. Pause nach Punkt.
 	var paddleSpeed = 5;
 	var leftPaddlePos = 225;
 	var rightPaddlePos = 225;
@@ -12,6 +12,7 @@
 	var ballVy = 3;
 	var leftScore = 0;
 	var rightScore = 0;
+	var paused = 1;
 
 /*~~~~~~~~~~Event Listener~~~~~~~~~~*/
 
