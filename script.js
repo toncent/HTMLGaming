@@ -1,5 +1,4 @@
 /*~~~~~~~~~~VARIABLEN~~~~~~~~~~*/
-//TODO: initFunktion, die den gameloop startet.
 	var paddleSpeed = 5;
 	var leftPaddlePos = 225;
 	var rightPaddlePos = 225;
@@ -18,7 +17,6 @@
 /*~~~~~~~~~~Event Listener~~~~~~~~~~*/
 
 	window.addEventListener('keydown', function(e) {
-		console.log(e.keycode);
 		if (e.keyCode == 38) {
 			rightV = -paddleSpeed;
 		} else if (e.keyCode == 40) {
@@ -28,9 +26,7 @@
 		} else if (e.keyCode == 83) {
 			leftV = paddleSpeed;
 		} else if (e.keyCode == 32) {
-			paused = 0;
-			pauseTimer = 2000;
-			document.getElementById("t").style.display = "none";
+			init();
 		};
 	}, false);
 
@@ -51,7 +47,15 @@
 
 /*~~~~~~~~~~Funktionen~~~~~~~~~~*/
 
-	var update = function(){
+	function init(){
+		document.getElementById("t").innerHTML = "";
+		document.getElementById("t").style.left = "385px";
+		/*-----FPS-----*/
+		window.setInterval("update()",16);
+	}
+
+
+	function update(){
 		
 		/*------Paddelbewegung------*/
 		if ((rightV > 0 && rightPaddlePos<450)||(rightV<0 && rightPaddlePos>0)) {
@@ -116,8 +120,7 @@
 			document.getElementById("lp").style.top = leftPaddlePos;
 			document.getElementById("rp").style.top = rightPaddlePos;
 			document.getElementById("b").style.top = ballPosY;
-			document.getElementById("b").style.left = ballPosX;
-		
+			document.getElementById("b").style.left = ballPosX;	
 	}
 
 	function reset(){
@@ -132,6 +135,3 @@
 		paused = 1;
 		document.getElementById("t").style.display = "block";
 	}
-
-/*~~~~~~~~~~FPS~~~~~~~~~~*/
-	window.setInterval("update()",16);

@@ -11,7 +11,8 @@ body {
 		div.timer{
 			position: absolute;
 			top: 220px;
-			left: 385px;
+			left: 170px;
+			background: transparent;
 		}
 
 		div.gameDiv{
