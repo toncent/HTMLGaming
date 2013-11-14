@@ -5,6 +5,13 @@ body {
 		div{
 			background-color: #000;
 			color: #FFF;
+			font-size: 60px;
+		}
+
+		div.timer{
+			position: absolute;
+			top: 220px;
+			left: 385px;
 		}
 
 		div.gameDiv{
@@ -30,14 +37,10 @@ body {
 
 		div.leftScoreDiv {
 		   float: right;
-		   display: inline-block;
-		   font-size: 60px;
 		}
 
 		div.rightScoreDiv {
 		   float: left;
-		   display: inline-block;
-		   font-size: 60px;
 		}
 
 		div.scoreWrapper{
