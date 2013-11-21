@@ -20,6 +20,7 @@ body {
 			height: 600px;
 			position:absolute;
 			border: 5px double;
+			display: none;
 		}
 
 		div.scoreWrapper {
@@ -80,5 +81,26 @@ body {
 		}
 
 		div.menu{
-			display: none;
+			width: 800px;
+			height: 600px;
+			position:absolute;
+			border: 5px double;
+			display: block;
+		}
+
+		div.menuButton{
+			text-align: center;
+			width:800px;
+		}
+
+		div.headline{
+			width: 800px;
+			text-align: center;
+			font-size: 80px;
+			text-shadow: 0px 0px 20px #F00;
+		}
+
+		div.clear{
+			height:100px;
+			clear: both;
 		}
