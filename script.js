@@ -1,3 +1,7 @@
+/*TODO: esc zum menü aufrufen
+		paused variable evtl umbenennen, weil sie zur Zeit anders genutz wird
+*/
+
 /*~~~~~~~~~~VARIABLEN~~~~~~~~~~*/
 	var paddleSpeed = 5;
 	var leftPaddlePos = 225;
@@ -14,38 +18,56 @@
 	var paused = 1;
 	var pauseTimer = 2000;
 	var gameStarted = 0;
+	var gameVisible = 0;
 
 /*~~~~~~~~~~Event Listener~~~~~~~~~~*/
+	document.addEventListener('DOMContentLoaded', initListeners)
+	function initListeners(){
+		window.addEventListener('keydown', function(e) {
+			if (e.keyCode == 38) {
+				rightV = -paddleSpeed;
+			} else if (e.keyCode == 40) {
+				rightV = paddleSpeed;
+			} else if (e.keyCode == 87) {
+				leftV = -paddleSpeed;
+			} else if (e.keyCode == 83) {
+				leftV = paddleSpeed;
+			} else if (e.keyCode == 32) {
+				if (gameStarted == 0 && gameVisible == 1) {
+					init();
+					gameStarted = 1;
+				}
+			};
+		}, false);
 
-	window.addEventListener('keydown', function(e) {
-		if (e.keyCode == 38) {
-			rightV = -paddleSpeed;
-		} else if (e.keyCode == 40) {
-			rightV = paddleSpeed;
-		} else if (e.keyCode == 87) {
-			leftV = -paddleSpeed;
-		} else if (e.keyCode == 83) {
-			leftV = paddleSpeed;
-		} else if (e.keyCode == 32) {
-			if (gameStarted == 0) {
-				init();
-				gameStarted = 1;
-			}
-		};
-	}, false);
+		window.addEventListener('keyup', function(e){
+			if (e.keyCode == 38) {
+				if(rightV == -paddleSpeed) rightV = 0;
+			} else if (e.keyCode == 40) {
+				if(rightV == paddleSpeed) rightV = 0;
+			} else if (e.keyCode == 87) {
+				if(leftV == -paddleSpeed) leftV =0;
+			} else if (e.keyCode == 83) {
+				if(leftV == paddleSpeed) leftV = 0;
+			};
+		}, false);
 
-	window.addEventListener('keyup', function(e){
-		if (e.keyCode == 38) {
-			if(rightV == -paddleSpeed) rightV = 0;
-		} else if (e.keyCode == 40) {
-			if(rightV == paddleSpeed) rightV = 0;
-		} else if (e.keyCode == 87) {
-			if(leftV == -paddleSpeed) leftV =0;
-		} else if (e.keyCode == 83) {
-			if(leftV == paddleSpeed) leftV = 0;
-		};
-	}, false);
+		document.getElementById("newGameButton").addEventListener('click', function(e){
+			document.getElementById("menu").style.display = "none";
+			document.getElementById("game").style.display ="block";
+			gameVisible = 1;
+		});
 
+		document.getElementById("optionsButton").addEventListener('click', function(e){
+			document.getElementById("menu").style.display = "none";
+			document.getElementById("options").style.display ="block";
+		});
+
+		document.getElementById("creditsButton").addEventListener('click', function(e){
+			document.getElementById("menu").style.display = "none";
+			document.getElementById("credits").style.display ="block";
+		});
+	}
 
 
 
