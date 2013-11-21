@@ -15,7 +15,7 @@ body {
 			background: transparent;
 		}
 
-		div.gameDiv{
+		div.game{
 			width: 800px;
 			height: 600px;
 			position:absolute;
@@ -36,11 +36,11 @@ body {
 			width: 390px;
 		}
 
-		div.leftScoreDiv {
+		div.leftScore {
 		   float: right;
 		}
 
-		div.rightScoreDiv {
+		div.rightScore {
 		   float: left;
 		}
 
@@ -76,5 +76,9 @@ body {
 			left: 395px;
 			top: 295px;
 			border-radius: 5px;
-			background-color: #FFF;
+			background-color: #00F;
+		}
+
+		div.menu{
+			display: none;
 		}

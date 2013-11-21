@@ -83,9 +83,7 @@
 				ballVtotal += 0.3;
 				ballVy = ((ballPosY - rightPaddlePos)/150)*1.6*ballVtotal-0.8*ballVtotal; //<--kompliziert
 				ballVx = -1*Math.sqrt(ballVtotal*ballVtotal - ballVy*ballVy);
-				console.log("x: "+ballVx);
-				console.log("y: "+ballVy);
-				console.log("total: "+ballVtotal);
+				updateBallColor();
 			};
 
 			//Ball trifft Paddel (links)
@@ -93,12 +91,14 @@
 				ballVtotal += 0.3;
 				ballVy = ballVy = ((ballPosY - leftPaddlePos)/150)*1.6*ballVtotal-0.8*ballVtotal;
 				ballVx = Math.sqrt(ballVtotal*ballVtotal - ballVy*ballVy);
+				updateBallColor();
 			};
 
 			//Ball trifft obere oder untere Wand
 			if (ballPosY>=590 || ballPosY<=0) {
 				ballVy *= -1;
 				ballVtotal +=0.1;
+				updateBallColor();
 			}
 
 			//Ball geht ins Aus (links)
@@ -127,6 +127,23 @@
 			document.getElementById("b").style.left = ballPosX;	
 	}
 
+	function updateBallColor(){
+		var result = "";
+		var red = Math.round((ballVtotal - 7)*25);
+		var blue = Math.round(255-(ballVtotal-7)*25);
+		if(blue < 0) blue = 0;
+		if(red > 255) red = 255;
+		if (red < 16) {
+			result+="0";
+		};
+		result += red.toString(16)+"00";
+		if (blue < 16) {
+			result += "0";
+		};
+		result += blue.toString(16);
+		document.getElementById("b").style.backgroundColor = "#"+result;
+	}
+
 	function reset(){
 		ballPosX = 395;
 		ballPosY = 295;
@@ -136,6 +153,7 @@
 		ballVy *= Math.random() < 0.5 ? -1 : 1;
 		ballVx *= Math.random() < 0.5 ? -1 : 1;
 		ballVtotal = 7;
+		updateBallColor();
 		paused = 1;
 		document.getElementById("t").style.display = "block";
 	}
