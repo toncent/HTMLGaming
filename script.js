@@ -130,8 +130,6 @@
 		buffer.width = canvas.width;
 		buffer.height = canvas.height;
 		var buffer_ctx = buffer.getContext("2d");
-		buffer_ctx.fillStyle = "#000000";
-		buffer_ctx.fillRect(0,0,800,600);
 		buffer_ctx.fillStyle ="#FFFFFF";
 		buffer_ctx.strokeStyle ="#FFFFFF";
 
@@ -144,8 +142,7 @@
 		drawBall(buffer_ctx);
 		
 		var ctx = canvas.getContext("2d");
-		ctx.fillStyle ="black";
-		ctx.fill();
+		ctx.clearRect(0,0,800,600);
 		ctx.drawImage(buffer,0,0);
 		/*document.getElementById("lp").style.top = leftPaddlePos;
 		document.getElementById("rp").style.top = rightPaddlePos;
