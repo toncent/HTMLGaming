@@ -16,8 +16,6 @@ body {
 		}
 
 		div.game{
-			width: 800px;
-			height: 600px;
 			position:absolute;
 			border: 5px double;
 			display: none;
