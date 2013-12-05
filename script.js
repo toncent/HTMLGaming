@@ -19,6 +19,7 @@
 	var pauseTimer = 2000;
 	var gameStarted = 0;
 	var gameVisible = 0;
+	var gameFps = 60;
 
 /*~~~~~~~~~~Event Listener~~~~~~~~~~*/
 	document.addEventListener('DOMContentLoaded', initListeners)
@@ -77,7 +78,7 @@
 		document.getElementById("t").innerHTML = "";
 		document.getElementById("t").style.left = "385px";
 		/*-----FPS-----*/
-		window.setInterval("update()",16);
+		window.setInterval("update()",1000/gameFps);
 	}
 
 
