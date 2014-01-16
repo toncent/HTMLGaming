@@ -21,6 +21,7 @@
         gameStarted = 0,
         gameVisible = 0,
         gameFps = 60,
+        previousBallPositions = [[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1]],
         canvas,
         timerStatus; //Stand des timers in gerundeter Form
 
@@ -165,6 +166,21 @@
         buffer_ctx.beginPath();
         buffer_ctx.arc(ballPosX,ballPosY,5,0,2*Math.PI);
         buffer_ctx.fill();
+        drawBallEffects(buffer_ctx);
+    }
+
+    function drawBallEffects(buffer_ctx){
+        previousBallPositions.shift();
+        previousBallPositions.push([ballPosX,ballPosY]);
+        buffer_ctx.globalAlpha = 0.2;
+        
+        for(var i = 9; i>=0; i--){
+            if(previousBallPositions[i][0] === -1) break;
+            buffer_ctx.beginPath();
+            buffer_ctx.arc(previousBallPositions[i][0],previousBallPositions[i][1],5-(0.5*(10-i)),0,2*Math.PI);
+            buffer_ctx.fill();
+        }
+        buffer_ctx.globalAlpha = 1;
     }
 
     function drawTimer(buffer_ctx){
@@ -222,5 +238,6 @@
         ballVy *= Math.random() < 0.5 ? -1 : 1;
         ballVx *= Math.random() < 0.5 ? -1 : 1;
         ballVtotal = 7;
+        previousBallPositions = [[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1]];
         paused = 1;
     }
