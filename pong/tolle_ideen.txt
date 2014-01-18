@@ -1,0 +1,6 @@
+-DX-BALL!!!
+-powerups
+	-nur bereich um den ball sichtbar
+	-ball "flackert"
+-startmenü
+-musik

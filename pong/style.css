@@ -1,0 +1,119 @@
+body{
+    background-color: #888;
+}
+
+div{
+    background-color: #000;
+    color: #FFF;
+    font-size: 60px;
+}
+
+.timer{
+    position: absolute;
+    top: 220px;
+    left: 170px;
+    background: transparent;
+}
+
+.game{
+    position:absolute;
+    border: 5px double;
+    display: none;
+}
+
+.scoreWrapper {
+   width: 800px;
+}
+
+.leftScoreWrapper {
+    float: left;
+    width: 390px;
+}
+
+.rightScoreWrapper {
+    float: right;
+    width: 390px;
+}
+
+.leftScore {
+   float: right;
+}
+
+.rightScore {
+   float: left;
+}
+
+.scoreWrapper{
+    width: 800px;
+    text-align: center;
+}
+
+.leftPaddle{
+    width: 20px;
+    height: 150px;
+    position: absolute;
+    left: 20px;
+    top: 225px;
+    border-radius: 5px;
+    background-color: #FFF;
+}
+
+.rightPaddle{
+    width: 20px;
+    height: 150px;
+    position: absolute;
+    left: 760px;
+    top: 225px;
+    border-radius: 5px;
+    background-color: #FFF;
+}
+
+.ball{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 395px;
+    top: 295px;
+    border-radius: 5px;
+    background-color: #00F;
+}
+
+.menu{
+    width: 800px;
+    height: 600px;
+    position:absolute;
+    border: 5px double;
+    display: block;
+}
+
+.menuButton{
+    text-align: center;
+    width:800px;
+    margin-bottom: 20px;        
+    cursor: pointer;
+}
+
+.menuButton:hover{
+    color: #F66;
+    text-shadow: 0 0 10px #F00;
+}
+
+.headline{
+    width: 800px;
+    text-align: center;
+    font-size: 80px;
+    text-shadow: 0 0 20px #F00;
+}
+
+.clear{
+    height:100px;
+    clear: both;
+}
+
+.credits{
+    display: none;
+}
+
+.options{
+    display: none;
+}
