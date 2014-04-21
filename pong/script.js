@@ -172,7 +172,7 @@ function drawBallEffects(buffer_ctx){
     for(var i = 9; i>=0; i--){
         if(previousBallPositions[i][0] === -1) break;
         buffer_ctx.beginPath();
-        buffer_ctx.arc(previousBallPositions[i][0],previousBallPositions[i][1],5-(0.5*(10-i)),0,2*Math.PI);
+        buffer_ctx.arc(previousBallPositions[i][0],previousBallPositions[i][1],5/*-(0.5*(10-i))*/,0,2*Math.PI);
         buffer_ctx.fill();
     }
     buffer_ctx.globalAlpha = 1;

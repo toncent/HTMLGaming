@@ -1,0 +1,18 @@
+img {
+	width:1000px;
+	height:600px;
+	position:relative;
+}
+
+.img-container {
+	overflow: hidden;
+	height: 200px;
+	width: 200px;
+	float:left;
+	transition: transform 1s;
+}
+
+.main-wrapper {
+	width: 1000px;
+	height: 600px;
+}
