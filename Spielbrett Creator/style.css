@@ -1,0 +1,26 @@
+.main_panel {
+	width: 800px;
+  height: 600px;
+  border: 2px solid #CCC;
+}
+
+.tools_section {
+  float: left;
+  width: 300px;
+  height:600px;
+  border: 2px solid #CCC;
+}
+
+.tool {
+  width: 149px;
+  height: 148px;
+  border-bottom: 2px solid #EEE;
+}
+
+.tool .left {
+  border-left: 1px solid #EEE;
+}
+
+.tool .right {
+  border-right: 1px solid #EEE;
+}

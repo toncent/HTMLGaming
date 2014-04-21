@@ -10,6 +10,7 @@ img {
 	width: 200px;
 	float:left;
 	transition: transform 1s;
+	-webkit-transition: -webkit-transform 1s;
 }
 
 .main-wrapper {
