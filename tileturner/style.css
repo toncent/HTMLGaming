@@ -9,8 +9,9 @@ img {
 	height: 200px;
 	width: 200px;
 	float:left;
-	transition: transform 1s;
-	-webkit-transition: -webkit-transform 1s;
+	position: absolute;
+	transition: transform 1s, width .5s, height .5s, box-shadow .5s;
+	-webkit-transition: -webkit-transform 1s, width .5s, height .5s, -webkit-box-shadow .5s;
 }
 
 .main-wrapper {
