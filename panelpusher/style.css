@@ -13,10 +13,20 @@ img {
 	-webkit-transition: -webkit-transform .3s;
 }
 
+.img-container-finish {
+	overflow: hidden;
+	height: 200px;
+	width: 200px;
+	float:left;
+	transition: transform .4s;
+	-webkit-transition: -webkit-transform .4s;
+}
+
 .main-wrapper {
 	width: 1000px;
 	height: 600px;
 	float: left;
+	overflow: hidden;
 }
 
 .solution-wrapper {

@@ -9,6 +9,10 @@ var emptySquare = 0;
 	scrambleInterval = null,
 	imgPath = './images/test.jpg';
 
+var animationFrameNumber = 0,
+	panels = null,
+	animationInterval = null;
+
 
 function init() {
 	var gameDiv = document.getElementById("gameDiv");
@@ -64,6 +68,7 @@ function movePanel(dirX, dirY){ //down and right are 1, up and left are -1
 		panelArrayPosition[newSquareNumber] = panelArrayPosition[prevSquareNumber];
 		panelArrayPosition[prevSquareNumber] = -1;
 		if(isPuzzleSolved()) {
+			console.log("1")
 			declareVictory();
 		}
 	}
@@ -107,7 +112,22 @@ function isPuzzleSolved(){
 }
 
 function declareVictory(){
-	console.log("DONE");
+	panels = document.getElementsByClassName("img-container");
+	for (var i = panels.length - 1; i >= 0; i--) {
+		panels[i].className = "img-container-finish"
+	}
+	panels = document.getElementsByClassName("img-container-finish");
+	animationFrameNumber = panels.length - 1;
+	animationInterval = window.setInterval("animateFinish()",100);
+}
+
+function animateFinish(){
+	if(animationFrameNumber == -1){
+		window.clearInterval(animationInterval);
+		return;
+	}
+	panels[animationFrameNumber].style.transform = "translate(0px,650px)";
+	animationFrameNumber--;
 }
 
 function getPanelAt(x,y){
