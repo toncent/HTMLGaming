@@ -1,3 +1,7 @@
+body {
+	background-color: #aaccff;
+}
+
 img {
 	width:1000px;
 	height:600px;
@@ -22,38 +26,45 @@ img {
 	-webkit-transition: -webkit-transform .4s;
 }
 
-.main-wrapper {
+.game-wrapper {
 	width: 1000px;
 	height: 600px;
 	float: left;
 	overflow: hidden;
+	border: 2px solid black;
+	transition: box-shadow 2s;
+	-webkit-transition: box-shadow 2s;
 }
 
 .solution-wrapper {
 	width: 1000px;
 	height: 600px;
 	position: relative;
+	top: 2px;
+	left: 2px;
 	box-shadow: 0 0 20px 10px yellow;
 	background-size: 1000px 600px;
 	display: none;
-	z-index: 1;
 }
 
 .button {
-	background-color: #00ffff;
+	background-color: #0000aa;
+	color: #ffffff;
 	border-radius: 5px;
 	padding: 10px;
 	cursor: pointer;
 	margin-bottom: 10px;
 }
 
-.button-container {
+.right-container {
 	float: left;
-	margin: 10px;
+	margin: 0 10px;
+	padding: 10px;
+	border: 2px solid black;
 }
 
-.white-box {
-	background-color: white;
+.blank-box {
+	background-color: #aaccff;
 	position: relative;
 	top: 400px;
 	left: 800px;

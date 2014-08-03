@@ -7,7 +7,8 @@ var emptySquare = 0;
 	scrambledAtLeastOnce = false,
 	scrambleTimes = 0,
 	scrambleInterval = null,
-	imgPath = './images/test.jpg';
+	imgPath = './images/test.jpg',
+	moveCount = 0;
 
 var animationFrameNumber = 0,
 	panels = null,
@@ -58,7 +59,11 @@ function movePanel(dirX, dirY){ //down and right are 1, up and left are -1
 	   (dirY == -1 && currentRow < rowCount)||
 	   (dirX == 1 && currentCol >= 0)||
 	   (dirX == -1 && currentCol < colCount)){
-
+		
+		if(scrambledAtLeastOnce){
+			increaseMoveCount();
+		}
+		
 		movingPanel = getPanelAt(currentCol, currentRow);
 		emptySquare = prevSquareNumber;
 		panelPositions[panelArrayPosition[prevSquareNumber]][0] += dirX*(1000/colCount);
@@ -75,6 +80,8 @@ function movePanel(dirX, dirY){ //down and right are 1, up and left are -1
 }
 
 function scramble() {
+	scrambledAtLeastOnce = false;
+	document.getElementById("solutionButton").style.color = "#888888";
 	if(scrambling){
 		return;
 	}
@@ -88,6 +95,7 @@ function scrambleHelper(){
 		scrambleTimes = 0;
 		scrambling = false;
 		scrambledAtLeastOnce = true;
+		document.getElementById("solutionButton").style.color = "#ffffff";
 		return;
 	}
 	var r;
@@ -118,16 +126,28 @@ function declareVictory(){
 	}
 	panels = document.getElementsByClassName("img-container-finish");
 	animationFrameNumber = panels.length - 1;
-	animationInterval = window.setInterval("animateFinish()",100);
+	animateFinish(1);
 }
 
-function animateFinish(){
+function animateFinish(step){
+	if(step==1){
+		document.getElementsByClassName("game-wrapper")[0].style.boxShadow = "0px 0px 30px 20px red";
+		window.setTimeout(function(){animateFinish(2)},2000);
+	} else if(step == 2){
+		document.getElementsByClassName("game-wrapper")[0].style.boxShadow = "none";
+		window.setTimeout(function(){animateFinish(3)},2000);
+	} else if(step==3) {
+		animationInterval = window.setInterval("fallingAnimation()",100);
+	}
+}
+
+function fallingAnimation(){
 	if(animationFrameNumber == -1){
 		window.clearInterval(animationInterval);
 		return;
 	}
 	panels[animationFrameNumber].style.transform = "translate(0px,650px)";
-	animationFrameNumber--;
+	animationFrameNumber--;	
 }
 
 function getPanelAt(x,y){
@@ -145,11 +165,11 @@ function setPosition(panel, x, y){
 }
 
 function showSolution() {
-	document.getElementsByClassName("solution-wrapper")[0].style.display = "block";
+	if(scrambledAtLeastOnce) document.getElementsByClassName("solution-wrapper")[0].style.display = "block";
 }
 
 function hideSolution() {
-	document.getElementsByClassName("solution-wrapper")[0].style.display = "none";
+	if(scrambledAtLeastOnce) document.getElementsByClassName("solution-wrapper")[0].style.display = "none";
 }
 
 function getColumn(num) {
@@ -158,4 +178,9 @@ function getColumn(num) {
 
 function getRow(num) {
 	return Math.floor(num/colCount);
+}
+
+function increaseMoveCount(){
+	moveCount++;
+	document.getElementById("movesSpan").innerHTML = moveCount;
 }
