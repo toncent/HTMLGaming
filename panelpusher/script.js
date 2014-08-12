@@ -80,6 +80,8 @@ function movePanel(dirX, dirY){ //down and right are 1, up and left are -1
 }
 
 function scramble() {
+	moveCount = -1;
+	increaseMoveCount();
 	scrambledAtLeastOnce = false;
 	document.getElementById("solutionButton").style.color = "#888888";
 	if(scrambling){
