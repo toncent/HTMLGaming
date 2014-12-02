@@ -7,7 +7,7 @@ function LinkedList(){
 	this.tail = null;
 	this.size = 0;
 	this.get = function(idx){
-		if(idx == 0) return this.getFirst();
+		if(idx <= 0) return this.getFirst();
 		if(idx >= this.size) return this.getLast();
 		
 		var current = this.head;
@@ -17,25 +17,35 @@ function LinkedList(){
 		return current.content;
 	}
 
-	this.getFirst(){
+	this.getFirst = function(){
 		return this.head.content;
 	}
 
-	this.getLast(){
+	this.getLast = function(){
 		return this.tail.content;
 	}
 
 	this.append = function(content){
-		this.tail.setNext(new ListNode(content));
-		this.tail.next.setPrevious(this.tail);
-		this.tail = this.tail.next;
+		if(this.size == 0){
+			this.tail = new ListNode(content);
+			this.head = this.tail;
+		} else {
+			this.tail.setNext(new ListNode(content));
+			this.tail.next.setPrevious(this.tail);
+			this.tail = this.tail.next;
+		}
 		this.size++;
 	}
 
 	this.prepend = function(content){
-		this.head.setPrevious(new ListNode(content));
-		this.head.previous.setNext(this.head);
-		this.head = this.head.previous;
+		if(this.size == 0){
+			this.tail = new ListNode(content);
+			this.head = this.tail;
+		} else {
+			this.head.setPrevious(new ListNode(content));
+			this.head.previous.setNext(this.head);
+			this.head = this.head.previous;
+		}
 		this.size++;
 	}
 

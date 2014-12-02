@@ -1,7 +1,4 @@
 window.addEventListener("DOMContentLoaded", init);
-window.onkeydown = function(e){
-  keyDownHandler(e);
-};
 
 //--------Classes--------//
 
@@ -19,14 +16,11 @@ function Circle(x,y,size){
 
 function GraphNode(content){
 	this.content = content;
-	this.neighbours = null;
+	this.neighbours = new LinkedList();
 	this.addNeighbour = function(neighbour){
-		if(this.neighbours){
-			if(this.neighbours.contains(neighbour)) return false;
-			this.neighbours.append(new ListNode(neighbour));
-		} else {
-			this.neighbours = new ListNode(neighbour);
-		}
+		if(this.neighbours.contains(neighbour)) return false;
+		this.neighbours.append(neighbour);
+		neighbour.neighbours.append(this);
 		neighbour.addNeighbour(this);
 		return true;
 	}
@@ -62,15 +56,29 @@ function update(){
 }
 
 function drawCircles(){
-	current = headObj;
-	while(current) {
-		current.content.content.draw();
-		current = current.next;
-	}
+	for (var i = 0; i < listOfObjects.size; i++) {
+		listOfObjects.get(i).content.draw();
+	};
 }
 
 function updateCirclePositions(){
 
+}
+
+function drawConnections(){
+	var currentNode,circle1,circle2;
+	ctx.strokeStyle = "#FFFF00";
+	for (var i = 0; i < numOfCircles; i++) {
+		currentNode = listOfObjects.get(i);
+		c1 = currentNode.content;
+		for(var j = 0; j<currentNode.neighbours.size;j++){
+			c2 = currentNode.neighbours.get(j).content;
+			ctx.beginPath();
+			ctx.moveTo(c1.x,c1.y);
+			ctx.lineTo(c2.x,c2.y);
+			ctx.stroke();
+		}
+	};
 }
 
 function createRandomCircles(num){
@@ -78,24 +86,21 @@ function createRandomCircles(num){
 	for (var i = 0; i < num; i++) {
 		x = Math.floor(circleSize+Math.random()*(canv.width-2*circleSize));
 		y = Math.floor(circleSize+Math.random()*(canv.height-2*circleSize));
-		if (!headObj) {
-			headObj = new ListNode(new GraphNode(new Circle(x,y,circleSize)));
-		} else {
-			headObj.append(new ListNode(new GraphNode(new Circle(x,y,circleSize))));
-		}
+		listOfObjects.append(new GraphNode(new Circle(x,y,circleSize)));
 	};
 }
 
 function createRandomConnections(num){
-	var n,m,success=false;
+	var n,m,success;
 	for (var i = 0; i < num; i++) {
-		n = Math.floor(Math.random()*numOfCircles);
-		m = Math.floor(Math.random()*numOfCircles);
-		while(m==n){
-			m = Math.floor(Math.random()*numOfCircles);
-		};
+		success = false;
 		while(!success){
-			success = headObj.get(n).content.addNeighbour(headObj.get(m).content);
+			n = Math.floor(Math.random()*numOfCircles);
+			m = Math.floor(Math.random()*numOfCircles);
+			while(m==n){
+				m = Math.floor(Math.random()*numOfCircles);
+			};
+			success = listOfObjects.get(n).addNeighbour(listOfObjects.get(m));
 		}
 	};
 }
