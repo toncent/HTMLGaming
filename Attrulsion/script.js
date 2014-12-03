@@ -34,9 +34,10 @@ var listOfObjects;
 
 //--------Constants--------//
 var circleSize = 10;
-var numOfCircles = 2;
-var numOfConnections = 1;
-var repulsiveForce = 0.01;
+var numOfCircles = 10;
+var numOfConnections = 12;
+var repulsiveForce = 1000;
+var attractiveForce = 0.00001;
 
 //--------functions--------//
 function init(){
@@ -45,7 +46,7 @@ function init(){
 	listOfObjects = new LinkedList();
 	createRandomCircles(numOfCircles);
 	createRandomConnections(numOfConnections);
-	mainLoop = window.setInterval(update,16);
+	mainLoop = window.setInterval(update,0);
 }
 
 function update(){
@@ -60,7 +61,6 @@ function update(){
 
 function drawCircles(){
 	for (var i = 0; i < listOfObjects.size; i++) {
-		console.log("x "+listOfObjects.get(i).content.x+"    y "+listOfObjects.get(i).content.x)
 		listOfObjects.get(i).content.draw();
 	};
 }
@@ -72,14 +72,19 @@ function updateCirclePositions(){
 	for (var i = 0; i < listOfObjects.size; i++) {
 		node1 = listOfObjects.get(i);
 		vectors = [];
-		for (var j = 0; j < listOfObjects.size; j++) { //all nodes repel each other with force 1/distance^2
+		for (var j = 0; j < listOfObjects.size; j++) { //all nodes repel each other with force repulsiveForce/distance^2
 			if(i==j) continue;
 			node2 = listOfObjects.get(j);
 			distance = calculateDistance(node1.content.x,node1.content.y,node2.content.x,node2.content.y);
 			tempVector = [node1.content.x-node2.content.x , node1.content.y-node2.content.y];
 			tempVector = normVector(tempVector);
-			tempVector = [repulsiveForce/(tempVector[0]*tempVector[0]) , repulsiveForce/(tempVector[1]*tempVector[1])];
+			tempVector = [(repulsiveForce/(distance*distance))*tempVector[0] , (repulsiveForce/(distance*distance))*tempVector[1]];
 			vectors.push(tempVector);
+			if(node1.neighbours.contains(node2)){  //nodes that are connected attract each other with force attractiveForce*distance^2
+				tempVector = normVector(tempVector);
+				tempVector = [-1*attractiveForce*distance*distance*tempVector[0] , -1*attractiveForce*distance*distance*tempVector[1]];
+				vectors.push(tempVector);
+			} 
 		};
 		forces[i] = addVectors(vectors);
 	};
@@ -112,7 +117,7 @@ function normVector(vector){
 
 function drawConnections(){
 	var currentNode,circle1,circle2;
-	ctx.strokeStyle = "#FFFF00";
+	ctx.strokeStyle = "#FF0000";
 	for (var i = 0; i < numOfCircles; i++) {
 		currentNode = listOfObjects.get(i);
 		c1 = currentNode.content;
@@ -133,6 +138,9 @@ function createRandomCircles(num){
 		y = Math.floor(circleSize+Math.random()*(canv.height-2*circleSize));
 		listOfObjects.append(new GraphNode(new Circle(x,y,circleSize)));
 	};
+
+	// listOfObjects.append(new GraphNode(new Circle(100,100,circleSize)));
+	// listOfObjects.append(new GraphNode(new Circle(100,300,circleSize)));
 }
 
 function createRandomConnections(num){
