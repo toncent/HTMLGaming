@@ -7,6 +7,37 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<canvas id="mainCanv" width="600" height="600">not working</canvas>
+		<canvas class="main-canvas" id="mainCanv" width="1000" height="900">not working</canvas>
+		<div class="controls">
+			<table>
+				<tr>
+					<td>Number of Nodes:</td>
+					<td>
+						<input class="input-text" type="text" id="numOfNodes" value="10" max="50">
+					</td>
+				</tr>
+				<tr>
+					<td>Number of Edges:</td>
+					<td>
+						<input class="input-text" type="text" id="numOfEdges" value="12">
+					</td>
+				</tr>
+				<tr align="right">
+					<td style="padding-right:10px" colspan="2">
+						<button id="redoGraph">New Graph</button>
+					</td>
+				</tr>
+				<tr>
+					<td style="background-color:#000000" colspan="2" style="height:1px;"></td>
+				</tr>
+				<tr>
+					<td>Simulation speed:</td>
+					<td>
+						<input class="input-slider" id="speedSlider" max="50" min="1" type="range"> 
+						<label id="sliderLabel">1</label>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</body>
 </html>

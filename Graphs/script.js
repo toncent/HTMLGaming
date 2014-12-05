@@ -2,8 +2,6 @@ window.addEventListener("DOMContentLoaded", init);
 
 //--------Constants--------//
 var circleSize = 10;
-var numOfCircles = 10;
-var numOfConnections = 0;
 var repulsiveForce = 1000;
 var attractiveForce = 0.00001;
 var attractionToCenter = 0.1;
@@ -14,6 +12,8 @@ var ctx;
 var mainLoop;
 var listOfObjects;
 var speedupFactor;
+var numOfCircles = 10;
+var numOfConnections = 12;
 
 //--------Classes--------//
 
@@ -46,10 +46,36 @@ window.onkeydown = function(e){
   keyDownHandler(e);
 };
 
+
+
 function init(){
+	document.getElementById("speedSlider").onchange = function(){
+		document.getElementById("sliderLabel").innerHTML = document.getElementById("speedSlider").value;
+		speedupFactor = document.getElementById("speedSlider").value;
+	};
+	document.getElementById("redoGraph").onclick = function(){
+		numOfCircles = document.getElementById("numOfNodes").value;
+		numOfConnections = document.getElementById("numOfEdges").value;
+		reinit();
+	};
+	document.getElementById("numOfNodes").onblur = function(){
+		if(this.value == "") this.value ="10";
+	};
+	document.getElementById("numOfEdges").onblur = function(){
+		if(this.value == "") this.value ="12";
+		if(this.value > (numOfCircles*(numOfCircles-1))/2) this.value = (numOfCircles*(numOfCircles-1))/2;
+	};
+
 	canv = document.getElementById("mainCanv");
 	ctx = canv.getContext("2d");
 	speedupFactor = 1;
+	reinit();
+}
+
+function reinit(){
+	if(mainLoop){
+		window.clearInterval(mainLoop);
+	}
 	listOfObjects = new LinkedList();
 	createRandomCircles(numOfCircles);
 	createRandomConnections(numOfConnections);

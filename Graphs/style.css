@@ -1,0 +1,19 @@
+.controls{
+	float:left;
+	background-color: #DDDDDD;
+}
+
+.main-canvas{
+	float:left;
+	margin-right: 10px;
+}
+
+label{
+	display:inline;
+}
+
+.input-slider{
+	display:inline;
+	position:relative;
+	top:4px;
+}
