@@ -10,10 +10,11 @@ var attractionToCenter = 0.1;
 var canv;
 var ctx;
 var mainLoop;
-var listOfObjects;
+var listOfNodes;
 var speedupFactor;
 var numOfCircles = 10;
 var numOfConnections = 12;
+var a;
 
 //--------Classes--------//
 
@@ -46,8 +47,6 @@ window.onkeydown = function(e){
   keyDownHandler(e);
 };
 
-
-
 function init(){
 	document.getElementById("speedSlider").onchange = function(){
 		document.getElementById("sliderLabel").innerHTML = document.getElementById("speedSlider").value;
@@ -57,6 +56,9 @@ function init(){
 		numOfCircles = document.getElementById("numOfNodes").value;
 		numOfConnections = document.getElementById("numOfEdges").value;
 		reinit();
+	};
+	document.getElementById("mainCanv").onclick = function(e){
+	canvClickHandler(e);
 	};
 	document.getElementById("numOfNodes").onblur = function(){
 		if(this.value == "") this.value ="10";
@@ -76,7 +78,7 @@ function reinit(){
 	if(mainLoop){
 		window.clearInterval(mainLoop);
 	}
-	listOfObjects = new LinkedList();
+	listOfNodes = new LinkedList();
 	createRandomCircles(numOfCircles);
 	createRandomConnections(numOfConnections);
 	mainLoop = window.setInterval(update,0);
@@ -113,8 +115,8 @@ function update(){
 }
 
 function drawCircles(){
-	for (var i = 0; i < listOfObjects.size; i++) {
-		listOfObjects.get(i).content.draw();
+	for (var i = 0; i < listOfNodes.size; i++) {
+		listOfNodes.get(i).content.draw();
 	};
 }
 
@@ -130,16 +132,16 @@ function updateCirclePositions(){
 	for (var n = 0; n < speedupFactor; n++) {
 		forces = [];
 		//calculate forces that pull on each node as 2d vectors
-		for (var i = 0; i < listOfObjects.size; i++) {
-			node1 = listOfObjects.get(i);
+		for (var i = 0; i < listOfNodes.size; i++) {
+			node1 = listOfNodes.get(i);
 			vectors = [];
 			tempVector = [canv.width/2-node1.content.x , canv.height/2-node1.content.y];
 			tempVector = normVector(tempVector);
 			tempVector = [attractionToCenter*tempVector[0] , attractionToCenter*tempVector[1]];
 			vectors.push(tempVector);
-			for (var j = 0; j < listOfObjects.size; j++) { //all nodes repel each other with force repulsiveForce/distance^2
+			for (var j = 0; j < listOfNodes.size; j++) { //all nodes repel each other with force repulsiveForce/distance^2
 				if(i==j) continue;
-				node2 = listOfObjects.get(j);
+				node2 = listOfNodes.get(j);
 				distance = calculateDistance(node1.content.x,node1.content.y,node2.content.x,node2.content.y);
 				tempVector = [node1.content.x-node2.content.x , node1.content.y-node2.content.y];
 				tempVector = normVector(tempVector);
@@ -153,8 +155,8 @@ function updateCirclePositions(){
 			};
 			forces[i] = addVectors(vectors);
 		};
-		for (var i = 0; i < listOfObjects.size; i++) {
-			node1 = listOfObjects.get(i); 
+		for (var i = 0; i < listOfNodes.size; i++) {
+			node1 = listOfNodes.get(i); 
 			node1.content.x += forces[i][0];
 			node1.content.y += forces[i][1];
 			
@@ -199,7 +201,7 @@ function drawConnections(){
 	var currentNode,circle1,circle2;
 	ctx.strokeStyle = "#FF0000";
 	for (var i = 0; i < numOfCircles; i++) {
-		currentNode = listOfObjects.get(i);
+		currentNode = listOfNodes.get(i);
 		c1 = currentNode.content;
 		for(var j = 0; j<currentNode.neighbours.size;j++){
 			c2 = currentNode.neighbours.get(j).content;
@@ -216,11 +218,11 @@ function createRandomCircles(num){
 	for (var i = 0; i < num; i++) {
 		x = Math.floor(circleSize+Math.random()*(canv.width-2*circleSize));
 		y = Math.floor(circleSize+Math.random()*(canv.height-2*circleSize));
-		listOfObjects.append(new GraphNode(new Circle(x,y,circleSize)));
+		listOfNodes.append(new GraphNode(new Circle(x,y,circleSize)));
 	};
 
-	// listOfObjects.append(new GraphNode(new Circle(100,100,circleSize)));
-	// listOfObjects.append(new GraphNode(new Circle(100,300,circleSize)));
+	// listOfNodes.append(new GraphNode(new Circle(100,100,circleSize)));
+	// listOfNodes.append(new GraphNode(new Circle(100,300,circleSize)));
 }
 
 function createRandomConnections(num){
@@ -233,7 +235,14 @@ function createRandomConnections(num){
 			while(m==n){
 				m = Math.floor(Math.random()*numOfCircles);
 			};
-			success = listOfObjects.get(n).addNeighbour(listOfObjects.get(m));
+			success = listOfNodes.get(n).addNeighbour(listOfNodes.get(m));
 		}
 	};
+}
+
+function canvClickHandler(event){
+	var x = event.pageX - event.target.offsetLeft;
+	var y = event.pageY - event.target.offsetTop;
+	var c = new Circle(x,y,circleSize);
+	listOfNodes.append(new GraphNode(c));
 }
