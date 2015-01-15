@@ -15,6 +15,8 @@ var speedupFactor;
 var numOfCircles = 10;
 var numOfConnections = 12;
 var a;
+var draggedCircle = null;
+var dragging = false;
 
 //--------Classes--------//
 
@@ -58,8 +60,14 @@ function init(){
 		reinit();
 	};
 	document.getElementById("mainCanv").onclick = function(e){
-	canvClickHandler(e);
+		canvClickHandler(e);
 	};
+	document.getElementById("mainCanv").onmousemove = function(e){
+		canvMouseMoveHandler(e);
+	};
+	document.getElementById("mainCanv").onmousedown = function(e){
+		canvMouseDownHandler(e);
+	}
 	document.getElementById("numOfNodes").onblur = function(){
 		if(this.value == "") this.value ="10";
 	};
@@ -111,7 +119,7 @@ function update(){
 	drawCircles();
 	drawConnections();
 	drawText();
-	updateCirclePositions();
+	if(!dragging) updateCirclePositions();
 }
 
 function drawCircles(){
@@ -123,7 +131,11 @@ function drawCircles(){
 function drawText(){
 	ctx.fillStyle = "#FFFFFF";
 	ctx.font="20px Arial";
-	ctx.fillText("Speed: "+speedupFactor,20,30);
+	if(!dragging){
+		ctx.fillText("Speed: "+speedupFactor,20,30);
+	} else {
+		ctx.fillText("Speed: Paused",20,30);
+	}
 }
 
 function updateCirclePositions(){
@@ -198,7 +210,7 @@ function normVector(vector){
 }
 
 function drawConnections(){
-	var currentNode,circle1,circle2;
+	var currentNode,c1,c2;
 	ctx.strokeStyle = "#FF0000";
 	for (var i = 0; i < numOfCircles; i++) {
 		currentNode = listOfNodes.get(i);
@@ -220,9 +232,6 @@ function createRandomCircles(num){
 		y = Math.floor(circleSize+Math.random()*(canv.height-2*circleSize));
 		listOfNodes.append(new GraphNode(new Circle(x,y,circleSize)));
 	};
-
-	// listOfNodes.append(new GraphNode(new Circle(100,100,circleSize)));
-	// listOfNodes.append(new GraphNode(new Circle(100,300,circleSize)));
 }
 
 function createRandomConnections(num){
@@ -241,8 +250,42 @@ function createRandomConnections(num){
 }
 
 function canvClickHandler(event){
-	var x = event.pageX - event.target.offsetLeft;
-	var y = event.pageY - event.target.offsetTop;
-	var c = new Circle(x,y,circleSize);
-	listOfNodes.append(new GraphNode(c));
+	if(!dragging){
+		var x = event.pageX - event.target.offsetLeft;
+		var y = event.pageY - event.target.offsetTop;
+		var c = new Circle(x,y,circleSize);
+		listOfNodes.append(new GraphNode(c));
+		numOfCircles++;
+	} else {
+		dragging = false;
+	}
+}
+
+function canvMouseDownHandler(event){
+	draggedCircle = circleNear(event.pageX - event.target.offsetLeft, event.pageY - event.target.offsetTop);
+	dragging = draggedCircle != null;
+	if(dragging){
+		draggedCircle.x = event.pageX - event.target.offsetLeft;
+		draggedCircle.y = event.pageY - event.target.offsetTop;
+	}
+}
+
+function canvMouseMoveHandler(event){
+	if(dragging){
+		draggedCircle.x = event.pageX - event.target.offsetLeft;
+		draggedCircle.y = event.pageY - event.target.offsetTop;
+	}
+}
+
+function circleNear(x,y){
+	var c;
+	for (var i = 0; i < numOfCircles; i++) {
+		currentNode = listOfNodes.get(i);
+		c = currentNode.content;
+		if(calculateDistance(x,y,c.x,c.y)<circleSize){
+			return c;
+		}
+		
+	};
+	return null;
 }
