@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html>
+<head>
+  	<meta charset="utf-8">
+  	<title>Fractals</title>
+</head>
+
+<body style="display: flex; flex-direction: row; flex-wrap: nowrap;">
+	<div>
+		<canvas width="1000px" height="600px" id="drawingSpace"></canvas>
+	</div>
+	<div style="padding: 15px;">
+		<div>
+			<label for="redFormula">red formula:</label><br/>
+			<input type="text" id="redFormula">
+		</div>
+		<div>
+			<label for="greenFormula">green formula:</label><br/>
+			<input type="text" id="greenFormula">
+		</div>
+		<div>
+			<label for="blueFormula">blue formula:</label><br/>
+			<input type="text" id="blueFormula">
+		</div>
+		<div>
+			<label for="alphaFormula">alpha formula:</label><br/>
+			<input type="text" id="alphaFormula">
+		</div>
+		<button onclick="calculate()">DO IT</button><br/>
+		<span id="calcTime">0</span> ms
+	</div>
+	<script type="text/javascript">
+		function calculate(){
+			console.log("CALCULATING");
+			let redFn = new Function('x', 'y', 'return ' + document.getElementById('redFormula').value)
+			let greenFn = new Function('x', 'y', 'return ' + document.getElementById('greenFormula').value)
+			let blueFn = new Function('x', 'y', 'return ' + document.getElementById('blueFormula').value)
+			let alphaFn = new Function('x', 'y', 'return ' + document.getElementById('alphaFormula').value)
+			let time = new Date().getMilliseconds();
+			let canvas = document.getElementById("drawingSpace");
+			let context = canvas.getContext("2d");
+			let imageData = context.createImageData(canvas.clientWidth, canvas.clientHeight);
+			let xMin = -3, xMax = 3, yMin = xMin * canvas.clientHeight / canvas.clientWidth, yMax = xMax * canvas.clientHeight / canvas.clientWidth;
+			for (let x = 0; x < canvas.clientWidth; x++) {
+				for(let y = 0; y < canvas.clientHeight; y++){
+					setPixel(imageData, x, y, redFn(x,y) % 256, greenFn(x,y) % 256, blueFn(x,y) % 256, alphaFn(x,y) % 256);
+				}
+			}
+
+			context.putImageData(imageData, 0, 0);
+			time = new Date().getMilliseconds() - time;
+			document.getElementById("calcTime").innerHTML = time;
+		}
+		
+  		function setPixel(imageData, x, y, r, g, b, a){
+		    var index = (x + y * imageData.width);
+		    imageData.data[index * 4 + 0] = r;
+		    imageData.data[index * 4 + 1] = g;
+		    imageData.data[index * 4 + 2] = b;
+		    imageData.data[index * 4 + 3] = a;
+		}
+  	</script>
+</body>
+</html>
